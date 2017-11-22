@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -15,8 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.fortech.training.QuizApp.QuizResult;
 import com.fortech.training.QuizApp.entity.MultipleChoice;
 import com.fortech.training.QuizApp.entity.Question;
@@ -40,11 +35,9 @@ public class QuestionsController {
 			Question q = it.next();
 			if (q instanceof MultipleChoice) {
 				mc.add((MultipleChoice) q);
-				System.out.println(mc.get(mc.size()-1).getChoices());
 			}
 			if (q instanceof SingleChoice) {
 				sc.add((SingleChoice) q);
-				System.out.println(sc.get(sc.size()-1).getChoices());
 
 			}
 		}

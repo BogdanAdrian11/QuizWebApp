@@ -8,6 +8,6 @@ import com.fortech.training.QuizApp.entity.Question;
 @NoRepositoryBean
 public interface QuestionBaseRepository<T extends Question> extends CrudRepository<T, Integer> {
 
-	  public T findByContent(String content);
+//	  public List<T> findAllByQuizId(int quizID);
 
 }

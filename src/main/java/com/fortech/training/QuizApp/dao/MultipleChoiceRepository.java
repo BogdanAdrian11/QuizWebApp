@@ -7,4 +7,5 @@ import com.fortech.training.QuizApp.entity.MultipleChoice;
 @Transactional
 public interface MultipleChoiceRepository extends QuestionBaseRepository<MultipleChoice>{
 
-}
+//	public List<MultipleChoice> findAllByQuiz_Id(int quizId);
+} 
