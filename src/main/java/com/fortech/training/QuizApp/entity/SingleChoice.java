@@ -1,14 +1,7 @@
 package com.fortech.training.QuizApp.entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
 import com.fortech.training.QuizApp.AutoCorrect;
 
@@ -16,18 +9,10 @@ import com.fortech.training.QuizApp.AutoCorrect;
 @DiscriminatorValue("SingleChoice")
 public class SingleChoice extends Question implements AutoCorrect{
 	
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="question_id")
-	private List<Choice> choices;
-	
 	public SingleChoice() {
-		
+		this.setType("MultipleChoice");
 	}
 	
-	public SingleChoice(String content) {
-		super(content);
-		choices = new ArrayList<Choice>();
-	}
 	/**
 	 * Adds a choice to our list of choices if the choice is not null
 	 * or empty, or we haven't reached the maximum number of choices,
@@ -36,32 +21,14 @@ public class SingleChoice extends Question implements AutoCorrect{
 	 * @param correct
 	 * @return true is the choice was added
 	 */
-	public boolean addChoice(String choice, boolean correct) {
-		if (choice == null || choice == "") {
-			return false;
-		}
-		if (choices.size() > MAX_NR_CHOICES) {
-			return false;
-		}
-		if (correct) {
-			for (Choice c : choices) {
-				if (c.isCorrect()) {
-					return false;
-				}
-			}
-		}
-		choices.add(new Choice(choice, correct));
-		return true;
-	}
-	
 	public boolean addChoice(Choice choice) {
 		if (choice == null || choice.getContent() == "") {
 			return false;
 		}
-		if (choices.size() > MAX_NR_CHOICES) {
+		if (this.getChoices().size() > MAX_NR_CHOICES) {
 			return false;
 		}
-		choices.add(choice);
+		this.getChoices().add(choice);
 		return true;
 	}
 	
@@ -72,7 +39,7 @@ public class SingleChoice extends Question implements AutoCorrect{
 	public boolean isValid() {
 		boolean valid = false;
 		
-		for (Choice c : choices) {
+		for (Choice c : this.getChoices()) {
 			if (c.isCorrect()) {
 				if (!valid) {
 					valid = true;
@@ -90,23 +57,13 @@ public class SingleChoice extends Question implements AutoCorrect{
 			return false;
 		}
 		int index = Integer.valueOf(solution.substring(0, 1));
-		if (index < 0 || index >= choices.size()) {
+		if (index < 0 || index >= this.getChoices().size()) {
 			return false;
 		}
-		if (choices.get(index).isCorrect()) {
+		if (this.getChoices().get(index).isCorrect()) {
 			return true;
 		}
 		return false;
-	}
-	
-	
-	
-	public List<Choice> getChoices() {
-		return choices;
-	}
-
-	public void setChoices(List<Choice> choices) {
-		this.choices = choices;
 	}
 
 	/* (non-Javadoc)
@@ -114,6 +71,6 @@ public class SingleChoice extends Question implements AutoCorrect{
 	 */
 	@Override
 	public String toString() {
-		return "SingleChoice " + super.toString() + " [choices=" + choices + "]";
+		return "SingleChoice " + super.toString() + " [choices=" + this.getChoices() + "]";
 	}
 }

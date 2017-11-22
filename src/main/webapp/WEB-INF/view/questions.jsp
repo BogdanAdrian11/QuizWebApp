@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,22 +40,23 @@
 		</div>
 		<div id="site_content">
 			<div id="content">
-				<h1>${quiz}</h1>
-				<form:form method="POST" action="#" commandName = "quizResult">
-					<c:forEach items="${mcQuestions}" var="question">
-					<input type="hidden" value="${questionResults.question}">
-						<td>${question.content}<br><br>
-						</td>
+				<h1>${quiz.name}</h1>
+				<form:form method="POST" action="#">
+					<c:forEach items="${quiz.questions}" var="question">
+						<td>${question.content}<br>
+						<br></td>
 						<c:forEach items="${question.choices}" var="choice">
-							<input type="checkbox" value="${questionResults.result}"/> ${choice.content}<br>
-							</c:forEach> <br>
-					</c:forEach>
-					<c:forEach items="${scQuestions}" var="question">
-						<td>${question.content}<br><br>
-						</td>
-						<c:forEach items="${question.choices}" var="choice">
-							<input type="radio" name="${question.content}" value="${result}"/> ${choice.content}<br>
-							</c:forEach> <br>
+							<c:choose>
+								<c:when test="${question.type == 'MultipleChoice'}">
+									<input type="checkbox" name="${question.id}" value="${choice.id}" /> ${choice.content}<br>
+								</c:when>
+								<c:when test="${question.type == 'SingleChoice'}">
+									<input type="radio" name="${question.id}"
+										value="${choice.id}" /> ${choice.content}<br>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<br>
 					</c:forEach>
 					<input type="submit" value="Submit" />
 				</form:form>
