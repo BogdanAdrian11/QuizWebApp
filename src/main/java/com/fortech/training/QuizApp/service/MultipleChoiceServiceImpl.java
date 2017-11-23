@@ -2,8 +2,11 @@ package com.fortech.training.QuizApp.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.fortech.training.QuizApp.entity.MultipleChoice;
 
+@Service
 public class MultipleChoiceServiceImpl implements MultipleChoiceService {
 
 	@Override

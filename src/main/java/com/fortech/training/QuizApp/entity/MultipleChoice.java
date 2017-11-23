@@ -49,6 +49,7 @@ public class MultipleChoice extends Question implements AutoCorrect{
 		return true;
 	}
 
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

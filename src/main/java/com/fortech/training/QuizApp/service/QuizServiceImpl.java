@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fortech.training.QuizApp.dao.QuizRepository;
+import com.fortech.training.QuizApp.entity.Choice;
+import com.fortech.training.QuizApp.entity.Question;
 import com.fortech.training.QuizApp.entity.Quiz;
 
 @Service
@@ -19,7 +21,6 @@ public class QuizServiceImpl implements QuizService {
 	
 	@Override
 	public int save(Quiz quiz) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -35,13 +36,11 @@ public class QuizServiceImpl implements QuizService {
 
 	@Override
 	public void update(int id, Quiz quiz) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -58,4 +57,31 @@ public class QuizServiceImpl implements QuizService {
 		return returnedQuizzes;
 	}
 
+	@Override
+	public double getResult(int quizId, List<Integer> results) {
+		if (results == null || results.size() == 0) {
+			return 0;
+		}
+		
+		int countCorrect = 0;
+		
+		Quiz quiz = repo.findOne(quizId);
+		for (Question question : quiz.getQuestions()) {
+			boolean correct = true;
+			for (Choice choice : question.getChoices()) {
+				if (choice.isCorrect() && !results.contains(choice.getId())) {
+					correct = false;
+					break;
+				}
+				if (!choice.isCorrect() && results.contains(choice.getId())) {
+					correct = false;
+					break;
+				}
+			}
+			if (correct) {
+				countCorrect++;
+			}
+		}
+		return (double)countCorrect / quiz.getQuestions().size() * 100;
+	}
 }

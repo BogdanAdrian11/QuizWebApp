@@ -9,7 +9,7 @@ public interface QuizService {
 	int save(Quiz quiz);
 	
 	Quiz get(int id);
-	
+		
 	List<Quiz> getAll();
 	
 	List<Quiz> getForIndex();
@@ -17,4 +17,6 @@ public interface QuizService {
 	void update(int id, Quiz quiz);
 	
 	void delete(int id);
+	
+	double getResult(int quizId, List<Integer> results);
 }

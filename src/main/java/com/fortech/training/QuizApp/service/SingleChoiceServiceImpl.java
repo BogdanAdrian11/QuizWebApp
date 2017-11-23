@@ -2,8 +2,11 @@ package com.fortech.training.QuizApp.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.fortech.training.QuizApp.entity.SingleChoice;
 
+@Service
 public class SingleChoiceServiceImpl implements SingleChoiceService {
 
 	@Override

@@ -10,7 +10,7 @@
 <meta name="keywords" content="website keywords, website keywords" />
 <meta http-equiv="content-type"
 	content="text/html; charset=windows-1252" />
-<link rel="stylesheet" type="text/css" href="resources/style.css"
+<link rel="stylesheet" type="text/css" href="/resources/style.css"
 	title="style" />
 </head>
 <body>
@@ -20,7 +20,7 @@
 				<div id="logo_text">
 					<!-- class="logo_colour", allows you to change the colour of the text -->
 					<h1>
-						<a href="index">quiz<span class="logo_colour">webapp</span></a>
+						<a href="/index">quiz<span class="logo_colour">webapp</span></a>
 					</h1>
 					<h2>simple quizzes and tests</h2>
 				</div>

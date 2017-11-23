@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,7 +22,7 @@
 				<div id="logo_text">
 					<!-- class="logo_colour", allows you to change the colour of the text -->
 					<h1>
-						<a href="index">quiz<span class="logo_colour">webapp</span></a>
+						<a href="/index">quiz<span class="logo_colour">webapp</span></a>
 					</h1>
 					<h2>simple quizzes and tests</h2>
 				</div>
@@ -41,18 +41,16 @@
 		<div id="site_content">
 			<div id="content">
 				<h1>${quiz.name}</h1>
-				<form:form method="POST" action="#">
+				<form:form method="POST" modelAttribute="quiz" action="#">
 					<c:forEach items="${quiz.questions}" var="question">
-						<td>${question.content}<br>
-						<br></td>
+						<td>${question.content}<br> <br></td>
 						<c:forEach items="${question.choices}" var="choice">
 							<c:choose>
 								<c:when test="${question.type == 'MultipleChoice'}">
-									<input type="checkbox" name="${question.id}" value="${choice.id}" /> ${choice.content}<br>
+									<input type="checkbox" name="result" value="${choice.id}" /> ${choice.content}<br>
 								</c:when>
 								<c:when test="${question.type == 'SingleChoice'}">
-									<input type="radio" name="${question.id}"
-										value="${choice.id}" /> ${choice.content}<br>
+									<input type="radio" name="result" value="${choice.id}" /> ${choice.content}<br>
 								</c:when>
 							</c:choose>
 						</c:forEach>

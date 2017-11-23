@@ -121,15 +121,15 @@ public abstract class Question {
 	}
 
 	public abstract boolean addChoice(Choice choice);
-	
-	/*
-	 * (non-Javadoc)
-	 * 
+
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Question [id=" + id + ", content=" + content + "]";
+		return "Question [id=" + id + ", content=" + content + ", type=" + type + ", choices=" + choices + "]";
 	}
+	
+
 
 }
