@@ -17,7 +17,7 @@ import com.fortech.training.QuizApp.entity.Quiz;
 @Transactional
 public class QuizServiceImpl implements QuizService {
 
-	@Autowired QuizRepository repo;
+	@Autowired private QuizRepository quizRepo;
 	
 	@Override
 	public int save(Quiz quiz) {
@@ -26,12 +26,12 @@ public class QuizServiceImpl implements QuizService {
 
 	@Override
 	public Quiz get(int id) {
-		return repo.findOne(id);
+		return quizRepo.findOne(id);
 	}
 
 	@Override
 	public List<Quiz> getAll() {
-		return repo.findAll();
+		return quizRepo.findAll();
 	}
 
 	@Override
@@ -41,12 +41,12 @@ public class QuizServiceImpl implements QuizService {
 
 	@Override
 	public void delete(int id) {
-
+		quizRepo.delete(id);
 	}
 
 	@Override
 	public List<Quiz> getForIndex() {
-		List<Quiz> quizzes = repo.findAll();
+		List<Quiz> quizzes = quizRepo.findAll();
 		List<Quiz> returnedQuizzes = new ArrayList<>();
 		Iterator<Quiz> it = quizzes.iterator();
 		for (int i = 0; i < 4; i++) {
@@ -65,7 +65,7 @@ public class QuizServiceImpl implements QuizService {
 		
 		int countCorrect = 0;
 		
-		Quiz quiz = repo.findOne(quizId);
+		Quiz quiz = quizRepo.findOne(quizId);
 		for (Question question : quiz.getQuestions()) {
 			boolean correct = true;
 			for (Choice choice : question.getChoices()) {
