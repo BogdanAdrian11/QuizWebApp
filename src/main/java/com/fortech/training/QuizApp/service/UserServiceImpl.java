@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User save(User user) {
 		
-		if (user.getName() == null || user.getName() == "" ||
+		if (user == null || user.getName() == null || user.getName() == "" ||
 				user.getPassword() == null || user.getPassword() == "" ||
 				user.getEmail() == null || user.getEmail() == "" ||
 				userRepo.findByEmail(user.getEmail()) != null) {
@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService{
 				userRepo.findByEmail(user.getEmail()) != null) {
 			return;
 		}
+		user.setId(id);
 		userRepo.save(user);
 	}
 

@@ -6,7 +6,7 @@ import com.fortech.training.QuizApp.entity.Quiz;
 
 public interface QuizService {
 
-	int save(Quiz quiz);
+	Quiz save(Quiz quiz);
 	
 	Quiz get(int id);
 		

@@ -20,8 +20,11 @@ public class QuizServiceImpl implements QuizService {
 	@Autowired private QuizRepository quizRepo;
 	
 	@Override
-	public int save(Quiz quiz) {
-		return 0;
+	public Quiz save(Quiz quiz) {
+		if (quiz == null || quiz.getName() == null || quiz.getName() == "") {
+			return null;
+		}
+		return quizRepo.save(quiz);
 	}
 
 	@Override
@@ -36,7 +39,11 @@ public class QuizServiceImpl implements QuizService {
 
 	@Override
 	public void update(int id, Quiz quiz) {
-
+		if (quiz == null || quiz.getName() == null || quiz.getName() == "") {
+			return;
+		}
+		quiz.setId(id);
+		quizRepo.save(quiz);
 	}
 
 	@Override

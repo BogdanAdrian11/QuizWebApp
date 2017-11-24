@@ -18,6 +18,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(
+	      use = JsonTypeInfo.Id.NAME, 
+	      include = JsonTypeInfo.As.PROPERTY, 
+	      property = "type")
+	    @JsonSubTypes({
+	        @JsonSubTypes.Type(value = SingleChoice.class, name = "SingleChoice"),
+	        @JsonSubTypes.Type(value = MultipleChoice.class, name = "MultipleChoice")
+	    })
 @Entity
 @Table(name = "question")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
