@@ -14,7 +14,7 @@ public interface QuizService {
 	
 	List<Quiz> getForIndex();
 	
-	void update(int id, Quiz quiz);
+	Quiz update(int id, Quiz quiz);
 	
 	void delete(int id);
 	

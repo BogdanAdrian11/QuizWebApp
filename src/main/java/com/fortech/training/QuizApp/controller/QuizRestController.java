@@ -10,18 +10,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fortech.training.QuizApp.entity.Quiz;
 import com.fortech.training.QuizApp.service.QuizService;
 
 @RestController
+@RequestMapping(value="/rest")
 public class QuizRestController {
 	
 	@Autowired private QuizService quizService;
 	
-	@PostMapping("/rest/quiz/create")
-	public ResponseEntity<?> registerStudentForCourse(@RequestBody Quiz newQuiz) {
+	//create a new quiz
+	@PostMapping("/quiz/create")
+	public ResponseEntity<?> create(@RequestBody Quiz newQuiz) {
 
 		Quiz quiz = quizService.save(newQuiz);
 		if ( quiz == null)
@@ -30,23 +33,27 @@ public class QuizRestController {
 		return ResponseEntity.ok().body("New Quiz has been saved with ID: " + quiz.getId());
 	}
 	
-	@GetMapping("/rest/quiz/get/{id}")
+	//get a quiz by id
+	@GetMapping("/quiz/get/{id}")
 	public Quiz get(@PathVariable("id") int id) {
 		return quizService.get(id);
 	}
 
-	@GetMapping(name="/rest/quiz/get")
+	//get the list of quizzes
+	@GetMapping("/quiz/get")
 	public List<Quiz> getAll() {
 		return quizService.getAll();
 	}
 	
-	@PutMapping("/rest/quiz/update/{id}")
+	//update a quiz
+	@PutMapping("/quiz/update/{id}")
 	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody Quiz quiz) {
 		quizService.update(id, quiz);
 	    return ResponseEntity.ok().body("Quiz has been updated successfully.");
 	}
 	
-	@DeleteMapping("/rest/quiz/delete/{id}")
+	//delete a quiz 
+	@DeleteMapping("/quiz/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		quizService.delete(id);
 		return ResponseEntity.ok().body("Quiz has been deleted successfully.");

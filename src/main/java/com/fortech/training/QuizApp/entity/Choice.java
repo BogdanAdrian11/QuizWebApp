@@ -26,27 +26,13 @@ public class Choice {
 		
 	}
 	/**
-	 * @param name
+	 * @param content
 	 * @param correct
 	 */
-	public Choice(String name, boolean correct) {
+	public Choice(String content, boolean correct) {
 		super();
-		this.content = name;
+		this.content = content;
 		this.correct = correct;
-	}
-	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return content;
-	}
-	
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.content = name;
 	}
 	
 	/**

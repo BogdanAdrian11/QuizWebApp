@@ -38,15 +38,6 @@ public class Quiz {
 		questions = new ArrayList<Question>();
 	}
 	
-	public boolean addQuestions(List<Question> questions) {
-		for (Question q : questions) {
-			if (!addQuestion(q)) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	public boolean addQuestion(Question question) {
 		if (questions == null) {
 			questions = new ArrayList<Question>();

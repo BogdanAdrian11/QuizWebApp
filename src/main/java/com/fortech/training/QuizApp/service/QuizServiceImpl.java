@@ -12,6 +12,7 @@ import com.fortech.training.QuizApp.dao.QuizRepository;
 import com.fortech.training.QuizApp.entity.Choice;
 import com.fortech.training.QuizApp.entity.Question;
 import com.fortech.training.QuizApp.entity.Quiz;
+import com.fortech.training.QuizApp.entity.SingleChoice;
 
 @Service
 @Transactional
@@ -21,8 +22,26 @@ public class QuizServiceImpl implements QuizService {
 	
 	@Override
 	public Quiz save(Quiz quiz) {
-		if (quiz == null || quiz.getName() == null || quiz.getName() == "") {
+		if (quiz == null || quiz.getName() == null || quiz.getName() == ""
+				|| quiz.getQuestions().size() == 0) {
 			return null;
+		}
+		for (Question question : quiz.getQuestions()) {
+			if (question.getContent() == null || question.getContent() == "" ||
+					question.getType() == null || question.getType() == "") {
+				return null;
+			}
+			if (question.getType().equals("SingleChoice")) {
+				SingleChoiceService serv = new SingleChoiceServiceImpl();
+				if (!serv.isValid((SingleChoice) question)) {
+					return null;
+				}
+			}
+			for (Choice choice : question.getChoices()) {
+				if (choice.getContent() == null || question.getContent() == "") {
+					return null;
+				}
+			}
 		}
 		return quizRepo.save(quiz);
 	}
@@ -38,12 +57,30 @@ public class QuizServiceImpl implements QuizService {
 	}
 
 	@Override
-	public void update(int id, Quiz quiz) {
-		if (quiz == null || quiz.getName() == null || quiz.getName() == "") {
-			return;
+	public Quiz update(int id, Quiz quiz) {
+		if (quiz == null || quiz.getName() == null || quiz.getName() == ""
+				|| quiz.getQuestions().size() == 0) {
+			return null;
+		}
+		for (Question question : quiz.getQuestions()) {
+			if (question.getContent() == null || question.getContent() == "" ||
+					question.getType() == null || question.getType() == "") {
+				return null;
+			}
+			if (question.getType().equals("SingleChoice")) {
+				SingleChoiceService serv = new SingleChoiceServiceImpl();
+				if (!serv.isValid((SingleChoice) question)) {
+					return null;
+				}
+			}
+			for (Choice choice : question.getChoices()) {
+				if (choice.getContent() == null || question.getContent() == "") {
+					return null;
+				}
+			}
 		}
 		quiz.setId(id);
-		quizRepo.save(quiz);
+		return quizRepo.save(quiz);
 	}
 
 	@Override

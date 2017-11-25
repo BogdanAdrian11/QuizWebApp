@@ -11,7 +11,7 @@
 <meta name="keywords" content="website keywords, website keywords" />
 <meta http-equiv="content-type"
 	content="text/html; charset=windows-1252" />
-<link rel="stylesheet" type="text/css" href="/resources/style.css"
+<link rel="stylesheet" type="text/css" href="/style.css"
 	title="style" />
 </head>
 
@@ -43,7 +43,7 @@
 				<!-- insert the page content here -->
 				<h1>Take a quiz</h1>
 				<c:forEach items="${quizzes}" var="quiz">
-					<span class="left"><img src="resources/question.png"
+					<span class="left"><img src="/question.png"
 						alt="example graphic" /></span>
 					<br />
 					<br />

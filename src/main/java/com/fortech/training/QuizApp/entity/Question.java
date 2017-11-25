@@ -48,6 +48,8 @@ public abstract class Question {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "question_id")
 	private List<Choice> choices;
+	
+	public static final int MAX_NR_CHOICES = 8;
 
 	public Question() {
 		choices = new ArrayList<Choice>();
@@ -131,8 +133,23 @@ public abstract class Question {
 		this.type = type;
 	}
 
-	public abstract boolean addChoice(Choice choice);
-
+	/**
+	 * Adds a choice to our list of choices if the choice is not null
+	 * or empty, or we haven't reached the maximum number of choices,
+	 * @param choice
+	 * @param correct
+	 * @return true is the choice was added
+	 */
+	public boolean addChoice(Choice choice) {
+		if (choice == null || choice.getContent() == "") {
+			return false;
+		}
+		if (this.getChoices().size() > MAX_NR_CHOICES) {
+			return false;
+		}
+		this.getChoices().add(choice);
+		return true;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
