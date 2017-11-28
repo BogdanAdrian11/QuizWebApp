@@ -23,14 +23,7 @@ public class User {
 	private String email;
 	
 	@Column(name="password")
-	private String password;
-	
-//	@ManyToMany
-//	@JoinColumn(name="Result",
-//				JoinColumns=@JoinColumn(name="user_id"),
-//				InversJoinColumns=@JoinColumn(name="quiz_id"))
-//	private List<Quiz> quizzes;
-	
+	private String password;	
 	
 	public User() {
 		

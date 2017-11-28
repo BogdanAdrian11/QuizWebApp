@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,8 +10,7 @@
 <meta name="keywords" content="website keywords, website keywords" />
 <meta http-equiv="content-type"
 	content="text/html; charset=windows-1252" />
-<link rel="stylesheet" type="text/css" href="/style.css"
-	title="style" />
+<link rel="stylesheet" type="text/css" href="/style.css" title="style" />
 </head>
 <body>
 	<div id="main">
@@ -31,19 +30,18 @@
 					<li><a href="/index">Home</a></li>
 					<li><a href="/login">Login</a></li>
 					<li class="selected"><a href="/quizzes">Quizzes</a></li>
-					<li><a href="/another_page.html">Another Page</a></li>
+					<li><a href="/admin">Admin</a></li>
 					<li><a href="/contact">Contact Us</a></li>
 				</ul>
 			</div>
 		</div>
 		<div id="site_content">
 			<div id="content">
-				<c:forEach items="${quizzes}" var="quiz">
-                    <tr>                    
-                			<td><a href = "/questions/${quiz.id}">${quiz.name}</a></td>
-                			<td> <br /> </td>
-                    </tr>
-                </c:forEach>
+				<ol>
+					<c:forEach items="${quizzes}" var="quiz">
+						<li><a href="/questions/${quiz.id}">${quiz.name}</a></li>
+					</c:forEach>
+				</ol>
 			</div>
 		</div>
 		<div id="content_footer"></div>

@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	        @JsonSubTypes.Type(value = MultipleChoice.class, name = "MultipleChoice")
 	    })
 @Entity
-@Table(name = "question")
+@Table(name = "Question")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Question {

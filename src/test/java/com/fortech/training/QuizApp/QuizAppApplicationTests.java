@@ -12,5 +12,4 @@ public class QuizAppApplicationTests {
 	@Test
 	public void contextLoads() {
 	}
-
 }

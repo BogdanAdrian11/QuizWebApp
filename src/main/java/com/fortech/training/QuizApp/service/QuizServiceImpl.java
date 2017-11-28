@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fortech.training.QuizApp.dao.QuizRepository;
 import com.fortech.training.QuizApp.entity.Choice;
+import com.fortech.training.QuizApp.entity.MultipleChoice;
 import com.fortech.training.QuizApp.entity.Question;
 import com.fortech.training.QuizApp.entity.Quiz;
 import com.fortech.training.QuizApp.entity.SingleChoice;
@@ -18,31 +19,39 @@ import com.fortech.training.QuizApp.entity.SingleChoice;
 @Transactional
 public class QuizServiceImpl implements QuizService {
 
-	@Autowired private QuizRepository quizRepo;
-	
+	@Autowired
+	private QuizRepository quizRepo;
+
 	@Override
 	public Quiz save(Quiz quiz) {
-		if (quiz == null || quiz.getName() == null || quiz.getName() == ""
-				|| quiz.getQuestions().size() == 0) {
+		if (quiz == null || quiz.getName() == null || quiz.getName() == "" || 
+				quiz.getName().length() > 50) {
 			return null;
 		}
-		for (Question question : quiz.getQuestions()) {
-			if (question.getContent() == null || question.getContent() == "" ||
-					question.getType() == null || question.getType() == "") {
-				return null;
-			}
-			if (question.getType().equals("SingleChoice")) {
-				SingleChoiceService serv = new SingleChoiceServiceImpl();
-				if (!serv.isValid((SingleChoice) question)) {
-					return null;
-				}
-			}
-			for (Choice choice : question.getChoices()) {
-				if (choice.getContent() == null || question.getContent() == "") {
-					return null;
-				}
-			}
-		}
+		
+//		if (quiz == null || quiz.getName() == null || quiz.getName() == "" || 
+//				quiz.getName().length() > 50 || quiz.getQuestions().size() == 0) {
+//			return null;
+//		}
+//		for (Question question : quiz.getQuestions()) {
+//			if (question.getContent() == null || question.getContent() == "" || question.getContent().length() > 250 ||
+//					question.getType() == null || question.getType() == "") {
+//				return null;
+//			}
+//			if (question.getType().equals("SingleChoice")) {
+//				SingleChoiceService serv = new SingleChoiceServiceImpl();
+//				if (!serv.isValid((SingleChoice) question)) {
+//					return null;
+//				}
+//			} else if (!question.getType().equals("MultipleChoice")) {
+//				return null;
+//			}
+//			for (Choice choice : question.getChoices()) {
+//				if (choice.getContent() == null || question.getContent() == "" || question.getContent().length() > 250) {
+//					return null;
+//				}
+//			}
+//		}
 		return quizRepo.save(quiz);
 	}
 
@@ -58,12 +67,12 @@ public class QuizServiceImpl implements QuizService {
 
 	@Override
 	public Quiz update(int id, Quiz quiz) {
-		if (quiz == null || quiz.getName() == null || quiz.getName() == ""
-				|| quiz.getQuestions().size() == 0) {
+		if (quiz == null || quiz.getName() == null || quiz.getName() == "" || 
+				quiz.getName().length() > 50 || quiz.getQuestions().size() == 0) {
 			return null;
 		}
 		for (Question question : quiz.getQuestions()) {
-			if (question.getContent() == null || question.getContent() == "" ||
+			if (question.getContent() == null || question.getContent() == "" || question.getContent().length() > 250 ||
 					question.getType() == null || question.getType() == "") {
 				return null;
 			}
@@ -72,9 +81,11 @@ public class QuizServiceImpl implements QuizService {
 				if (!serv.isValid((SingleChoice) question)) {
 					return null;
 				}
+			} else if (!question.getType().equals("MultipleChoice")) {
+				return null;
 			}
 			for (Choice choice : question.getChoices()) {
-				if (choice.getContent() == null || question.getContent() == "") {
+				if (choice.getContent() == null || question.getContent() == "" || question.getContent().length() > 250) {
 					return null;
 				}
 			}
@@ -97,7 +108,7 @@ public class QuizServiceImpl implements QuizService {
 			if (it.hasNext()) {
 				returnedQuizzes.add(it.next());
 			}
-		}		
+		}
 		return returnedQuizzes;
 	}
 
@@ -106,9 +117,9 @@ public class QuizServiceImpl implements QuizService {
 		if (results == null || results.size() == 0) {
 			return 0;
 		}
-		
+
 		int countCorrect = 0;
-		
+
 		Quiz quiz = quizRepo.findOne(quizId);
 		for (Question question : quiz.getQuestions()) {
 			boolean correct = true;
@@ -126,6 +137,41 @@ public class QuizServiceImpl implements QuizService {
 				countCorrect++;
 			}
 		}
-		return (double)countCorrect / quiz.getQuestions().size() * 100;
+		return (double) countCorrect / quiz.getQuestions().size() * 100;
+	}
+
+	@Override
+	public boolean addQuestion(int quizId, String type, String content, 
+			List<String> choices, List<Integer> correct) {
+		if (content == null || content == "" || content.length() > 250 ||
+				type == null || type == "") {
+			return false;
+		}
+		Question question;
+		if (type.equals("SingleChoice")) {
+			question = new SingleChoice();
+		} else if (type.equals("MultipleChoice")) {
+			question = new MultipleChoice();
+		} else {
+			return false;
+		}
+
+		question.setType(type);
+		question.setContent(content);
+		for (int i = 0; i < choices.size(); i++) {
+			String choice = choices.get(i);
+			if (choice == null || choice == "" || choice.length() > 250) {
+				return false;
+			}
+			if (correct.contains(i)) {
+				question.addChoice(new Choice(choices.get(i), true));
+			} else {
+				question.addChoice(new Choice(choices.get(i), false));
+			}
+		}
+		Quiz quiz = get(quizId);
+		quiz.addQuestion(question);
+		quizRepo.save(quiz);
+		return true;
 	}
 }

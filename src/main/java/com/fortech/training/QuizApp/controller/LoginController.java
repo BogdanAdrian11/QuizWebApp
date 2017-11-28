@@ -23,7 +23,7 @@ public class LoginController {
 			@RequestParam String password) {
 		if (userService.validateUser(name, password)) {
 			model.put("name", name);
-			return "welcome";
+			return "admin";
 		} else {
 			model.put("errorMessage", "Invalid Credentials");
 			return "login";

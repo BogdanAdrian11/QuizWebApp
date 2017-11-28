@@ -48,14 +48,19 @@ public class QuizRestController {
 	//update a quiz
 	@PutMapping("/quiz/update/{id}")
 	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody Quiz quiz) {
-		quizService.update(id, quiz);
-	    return ResponseEntity.ok().body("Quiz has been updated successfully.");
+		if (quizService.update(id, quiz) != null) {
+			return ResponseEntity.ok().body("Quiz has been updated successfully.");
+		}
+		return ResponseEntity.noContent().build();
 	}
 	
 	//delete a quiz 
 	@DeleteMapping("/quiz/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") int id) {
-		quizService.delete(id);
-		return ResponseEntity.ok().body("Quiz has been deleted successfully.");
+		if (quizService.get(id) != null) {
+			quizService.delete(id);
+			return ResponseEntity.ok().body("Quiz has been deleted successfully.");
+		}
+		return ResponseEntity.noContent().build();
    }
 }

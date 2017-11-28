@@ -1,21 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
 <head>
-<title>index</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>admin</title>
 <meta name="description" content="website description" />
 <meta name="keywords" content="website keywords, website keywords" />
 <meta http-equiv="content-type"
 	content="text/html; charset=windows-1252" />
 <link rel="stylesheet" type="text/css" href="/style.css" title="style" />
 </head>
-
 <body>
 	<div id="main">
 		<div id="header">
@@ -41,12 +37,30 @@
 		</div>
 		<div id="site_content">
 			<div id="content">
-				<!-- insert the page content here -->
-				<h1>
-					Your score:
-					<fmt:formatNumber type="number" maxFractionDigits="2"
-						value="${score}" />
-				</h1>
+				<form action="/admin/create/${quizId}/addQuestion" method="POST">
+				<font color="red">${message}<br /> </font>
+				Question type <select name="type">
+						<option value="MultipleChoice">MultipleChoice</option>
+						<option value="SingleChoice">SingleChoice</option>
+					</select> 
+					Question Content: <textarea rows="4" cols="62" name="content"></textarea>
+					 <br /> <br />
+					<c:forEach var="index" begin="0" end="${nrOfChoices -'1'}">
+					Choice <c:out value="${index + '1'}" />:
+					<input type="checkbox" name="correct" value="${index}" /> correct <br>
+					<textarea rows="4" cols="62" name="choiceContent"></textarea> <br />
+					</c:forEach>
+					Number of choices <select name="nrOfChoices">
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+					</select> <input type='submit' name='action' value='anotherQuestion' /> <br/>
+					<input type='submit' name='action' value='finish' />
+				</form>
 			</div>
 		</div>
 		<div id="content_footer"></div>
