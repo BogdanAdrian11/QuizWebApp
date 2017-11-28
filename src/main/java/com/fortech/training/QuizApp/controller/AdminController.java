@@ -82,7 +82,7 @@ public class AdminController {
 		} else if (action.equals("finish")){
 			Quiz quiz = quizService.get(quizId);
 			if (quiz.getQuestions().size() > 0) {
-				model.put("message", "Quiz successfully created");
+				model.put("message", "Quiz successfully created with id: " + quizId);
 			} else {
 				quizService.delete(quizId);
 				model.put("message", "Quiz not created");

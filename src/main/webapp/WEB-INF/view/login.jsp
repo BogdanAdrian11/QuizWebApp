@@ -31,7 +31,6 @@
 					<li class="selected"><a href="/login">Login</a></li>
 					<li><a href="/quizzes">Quizzes</a></li>
 					<li><a href="/admin">Admin</a></li>
-					<li><a href="/contact">Contact Us</a></li>
 				</ul>
 			</div>
 		</div>
